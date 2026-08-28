@@ -97,6 +97,25 @@ HIGH_URGENCY_CUES = [
     "collapsed", "gir gaya aur behosh", "electrocuted", "current laga", "करंट लगा",
     "drown", "doob", "kidnap", "assault", "rape", "chhed",
     "spark", "sparking", "high voltage", "wire hanging", "loose wire",
+    # Broader, indirect hazard language - the words a person actually uses to
+    # describe a dangerous situation without naming a category of danger
+    # ("emergency", "accident") outright. Added after the held-out eval
+    # showed the narrower list above taught cue-word detection rather than
+    # severity inference; see EVAL.md.
+    "hazard", "serious hazard", "health hazard", "could fall", "could get hurt",
+    "going to get hurt", "someone will get hurt", "collapse", "collapsing",
+    "about to fall", "leaning", "sinking", "caved in", "cave in",
+    "cracked", "crack in", "developed a crack", "missing railing", "no railing",
+    "no barricade", "without any barrier", "khatarnak", "risky", "unsafe",
+    "not safe", "danger", "dangerous", "gir sakta hai", "koi bhi gir sakta",
+    "takra sakta hai", "koi bhi takra sakta", "kabhi bhi gir sakta",
+    "any moment", "could collapse", "might collapse",
+    "khula hua", "khula pada", "open manhole", "open pit", "no cover",
+    "cover is missing", "dhakkan gayab", "exposed wire", "exposed live wire",
+    "bare wire", "live wire", "loose railing", "broken railing",
+    "we are scared", "we're scared", "hum darr", "hum bahut dare",
+    "scared to walk", "afraid to walk", "not feel safe", "don't feel safe",
+    "immediate danger", "turant khatra", "poses a risk", "safety hazard",
 ]
 
 LOW_URGENCY_CUES = [
@@ -105,6 +124,14 @@ LOW_URGENCY_CUES = [
     "minor issue", "chhoti si baat", "not an emergency", "urgent nahi hai",
     "not a big deal", "small complaint", "just a query", "sirf jaankari",
     "thank you", "resolved", "already fixed", "just for information",
+    # Broader indirect low-stakes language, same reasoning as the HIGH list
+    # above: real complaints signal "this can wait" without ever saying the
+    # word "urgent".
+    "not serious", "not important", "not affecting", "no particular hurry",
+    "eventually", "cosmetic", "just wanted to flag", "just wanted to note",
+    "just mentioning", "just to let you know", "fyi", "for the record",
+    "no immediate", "nothing urgent", "not that big", "a small matter",
+    "just so you know", "looks fine now", "seems okay now", "no complaints otherwise",
 ]
 
 
@@ -190,6 +217,7 @@ add_dept("pwd", "Roads & Infrastructure", "Public Works Department (PWD)", [
             ("There's a deep hole in the road right outside our gate, cars keep swerving to avoid it and almost hit each other.", False),
             ("सड़क पर इतना बड़ा गड्ढा बन गया है कि बारिश में पानी भर जाता है और दिखता ही नहीं, कल एक स्कूटर वाला गिर गया।", False),
             ("Raat mein andhere mein gaddha dikhta nahi aur do baar gir chuke hain log.", False),
+            ("The edge of the road has caved in right where kids wait for the school van, one more heavy truck and it could collapse entirely.", False),
         ],
     },
     {
@@ -259,6 +287,7 @@ add_dept("water", "Water Supply", "Water Board", [
             ("Humein paani lene ke liye 2 km door jaana padta hai kyunki yahan supply band ho gayi hai.", False),
             ("हमारे मोहल्ले में तीन दिन से नल सूखे पड़े हैं, बर्तन धोने तक का पानी नहीं है।", False),
             ("We have had to buy water tankers every day this week because nothing comes from the pipeline.", False),
+            ("Overhead tank ka lohe ka structure jang khaa kar kamzor ho gaya hai, dheere dheere jhuk bhi raha hai ek taraf.", False),
         ],
     },
     {
@@ -361,6 +390,7 @@ add_dept("electricity", "Electricity", "State Electricity Board", [
             ("Bijli ka tar bahut neeche latak raha hai gali mein, kal ek bachcha usse takraate takraate bacha.", False),
             ("स्कूल के गेट के पास बिजली का तार लटक रहा है और बारिश में चिंगारियां निकलती हैं, कोई भी घायल हो सकता है।", False),
             ("Neeche latka hua tar barish mein current laga sakta hai, bahut dar lagta hai bacchon ko bhejne mein.", False),
+            ("The cable running along the compound wall has no covering at all, anyone brushing against it in the rain could get hurt badly.", False),
         ],
     },
     {
@@ -430,6 +460,7 @@ add_dept("sanitation", "Sanitation & Waste", "Municipal Corporation - Sanitation
             ("Nali band ho gayi hai do hafte se, ganda paani ab gali mein ghusne laga hai.", False),
             ("नाली दो हफ्ते से जाम है, अब गंदा पानी गली में घुसने लगा है और मक्खी बहुत हैं।", False),
             ("Barsaat ka paani nikalne ki jagah nahi hai, ghar ke saamne talab ban jaata hai.", False),
+            ("The manhole cover next to the blocked drain has sunk in and cracked, a two-wheeler already skidded into the gap once trying to avoid the standing water.", False),
         ],
     },
     {
@@ -441,6 +472,7 @@ add_dept("sanitation", "Sanitation & Waste", "Municipal Corporation - Sanitation
             ("The public toilet near the bus stand hasn't been cleaned in weeks, women avoid using it entirely now.", False),
             ("सार्वजनिक शौचालय में इतनी गंदगी है कि अंदर जाना भी मुश्किल है, कई हफ्तों से सफाई नहीं हुई।", False),
             ("Toilet ka darwaza bhi tuta hua hai aur paani ki tanki khaali rehti hai.", False),
+            ("The paint on the toilet walls has faded and one tile is chipped, nothing serious, just wanted to note it for whenever repainting is scheduled.", False),
         ],
     },
     {
@@ -510,6 +542,7 @@ add_dept("health", "Healthcare", "Department of Health & Family Welfare", [
             ("There are rats running around the general ward at night and the bedsheets haven't been changed in days.", False),
             ("वार्ड में चूहे घूमते रहते हैं और चादरें कई दिनों से नहीं बदली गई हैं, मरीज़ों को इंफेक्शन का डर है।", False),
             ("Patient ko infection ka khatra hai itni gandagi ki wajah se.", False),
+            ("The IV stand next to my father's bed is rusted and unstable, it nearly tipped over onto him when a nurse brushed past it.", False),
         ],
     },
     {
@@ -546,6 +579,7 @@ add_dept("education", "Education", "Department of School Education", [
             ("Classroom ki chhat se barish ka paani tapakta hai, bachche corridor mein baithte hain.", False),
             ("स्कूल की छत से बारिश का पानी टपकता है, बच्चों को बरामदे में बैठना पड़ता है।", False),
             ("Deewar mein badi darar aa gayi hai barish ke baad, girne ka darr hai.", False),
+            ("A chunk of plaster from the ceiling fell right onto a student's desk during class last week, thankfully nobody was sitting there at the time.", False),
         ],
     },
     {
@@ -579,6 +613,7 @@ add_dept("education", "Education", "Department of School Education", [
             ("The school increased fees suddenly without sending any notice to parents this term.", False),
             ("स्कूल ने बिना बताए फीस बढ़ा दी है, अभिभावकों को कोई सूचना नहीं दी गई।", False),
             ("Extra activity fund ke naam par bhi paisa maanga ja raha hai bar bar.", False),
+            ("The added charge is only about two hundred rupees so it's not that big a deal financially, just wanted it on record in case it keeps happening.", False),
         ],
     },
     {
@@ -637,6 +672,7 @@ add_dept("transport", "Public Transport", "State Transport Corporation", [
             ("The bus stop shelter roof caved in during the last storm, now we stand in the sun and rain waiting.", False),
             ("बस स्टॉप का शेड तूफान में गिर गया, अब धूप और बारिश में खड़ा रहना पड़ता है।", False),
             ("Bench bhi tooti padi hai bus stop par, baithne ki jagah nahi bachi.", False),
+            ("One of the shelter's support poles has rusted through at the base and the whole roof leans to one side now, it could come down on someone waiting under it.", False),
         ],
     },
     {
@@ -673,6 +709,7 @@ add_dept("police", "Police & Public Safety", "Police Department", [
             ("Someone broke the lock on our house last night and took our belongings, we're still shaken up.", False),
             ("कल रात घर का ताला तोड़कर कोई सामान ले गया, हम बहुत डरे हुए हैं।", False),
             ("Maine complaint di thi ek hafta pehle lekin abhi tak koi report nahi bani.", False),
+            ("It was just an old bicycle bell that went missing from outside the shop, not a big deal, just wanted it noted in case a pattern shows up in the area.", False),
         ],
     },
     {
@@ -764,6 +801,7 @@ add_dept("food", "Ration & Public Distribution", "Department of Food & Civil Sup
             ("Sarkari dukaan se mila chawal patthar aur mitti se bhara hua tha.", False),
             ("सरकारी दुकान से मिला चावल पत्थर और मिट्टी से भरा हुआ था, खाने लायक नहीं था।", False),
             ("Aata itna purana tha ki usme keede pad gaye the.", False),
+            ("Two people in our lane fell sick after cooking with the oil from the last batch, we think it may have gone bad before it was even distributed.", False),
         ],
     },
     {
@@ -797,6 +835,7 @@ add_dept("food", "Ration & Public Distribution", "Department of Food & Civil Sup
             ("The dealer demands extra cash above the fixed rate and refuses to give the ration if we don't pay it.", False),
             ("दुकानदार सरकारी दर से ज़्यादा पैसा मांगता है, मना करने पर राशन देने से इनकार कर देता है।", False),
             ("Bill mein kam amount likha jaata hai lekin asal mein zyada liya jaata hai.", False),
+            ("It's only ten or twenty rupees extra each time, not that big a deal on its own, just mentioning it in case others are seeing the same thing.", False),
         ],
     },
 ])
@@ -844,6 +883,7 @@ add_dept("social", "Pension & Social Welfare", "Department of Social Welfare", [
             ("Mere pitaji ka disability certificate chaar mahine se atka hua hai, koi update hi nahi milta.", False),
             ("मेरे पिताजी का विकलांगता प्रमाण पत्र चार महीने से अटका हुआ है, कोई अपडेट नहीं मिलता।", False),
             ("Medical board ki date hi nahi mil rahi, baar baar postpone ho jaati hai.", False),
+            ("A company offered my father a job on the condition that he submit this certificate by next week, and at this rate he's going to lose the offer entirely.", False),
         ],
     },
     {
@@ -866,6 +906,7 @@ add_dept("social", "Pension & Social Welfare", "Department of Social Welfare", [
             ("Our application has been stuck at the verification stage on the portal for months with no officer responding.", False),
             ("फॉर्म पोर्टल पर वेरिफिकेशन स्टेज पर अटका हुआ है, कोई अधिकारी जवाब ही नहीं देता।", False),
             ("Helpline number bhi lagta nahi hai kai baar try karne par.", False),
+            ("It's a small top-up amount and we're not depending on it right away, just flagging it so it doesn't get lost in the system entirely.", False),
         ],
     },
 ])
@@ -902,6 +943,7 @@ add_dept("revenue", "Property & Land Records", "Revenue Department", [
             ("Our neighbor has built a wall extending into part of our plot and refuses to move it despite having no legal right to it.", False),
             ("पड़ोसी ने हमारी ज़मीन के कुछ हिस्से में दीवार बना दी है, उन्हें कोई अधिकार नहीं है।", False),
             ("Zameen ki nishandehi ko lekar do parivaron mein jhagda chal raha hai kai saal se.", False),
+            ("The new wall the neighbor built is leaning noticeably toward our side of the plot already, and if it comes down it will land right on our kitchen.", False),
         ],
     },
     {
@@ -913,6 +955,7 @@ add_dept("revenue", "Property & Land Records", "Revenue Department", [
             ("It's been months since we bought the property but the records still show the previous owner's name.", False),
             ("संपत्ति खरीदे कई महीने हो गए लेकिन रिकॉर्ड में अभी भी पुराने मालिक का नाम है।", False),
             ("Tehsil office mein file kahan hai koi bata hi nahi pa raha.", False),
+            ("It's only a paperwork formality at this point since we already live there without any dispute, no rush on our end, just want it corrected eventually.", False),
         ],
     },
     {
@@ -982,6 +1025,7 @@ add_dept("pollution", "Environment & Pollution", "State Pollution Control Board"
             ("The factory releases untreated waste directly into the drain and it has turned completely black and foul-smelling.", False),
             ("फैक्ट्री का गंदा पानी सीधे नाले में छोड़ दिया जाता है, नाला पूरा काला पड़ गया है।", False),
             ("Ganda paani khet tak pahunch gaya hai, fasal kharab hone ka darr hai.", False),
+            ("Three children in our lane who play near the drain outlet have developed skin rashes in the last two weeks, and their parents are convinced it's from the water.", False),
         ],
     },
     {
@@ -993,6 +1037,7 @@ add_dept("pollution", "Environment & Pollution", "State Pollution Control Board"
             ("People have been cutting down old trees in the park at night without any permit.", False),
             ("कुछ लोग रात के अंधेरे में पार्क के पुराने पेड़ काट रहे हैं बिना किसी अनुमति के।", False),
             ("Subah uthkar dekha toh teen bade ped kate pade the.", False),
+            ("It's just two small saplings near the gate, nothing that's affecting anyone right now, just noting it in case it becomes a habit for whoever is doing it.", False),
         ],
     },
     {

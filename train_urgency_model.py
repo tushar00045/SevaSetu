@@ -42,10 +42,10 @@ LABEL_ENCODER_PATH = "urgency_label_encoder.pkl"
 VOCAB_PATH = "urgency_vocabulary.pkl"
 
 MAX_VOCAB_SIZE = 30000
-MAX_SEQUENCE_LENGTH = 150
+MAX_SEQUENCE_LENGTH = 64  # 99th percentile complaint length is 52 tokens, max 79
 EMBEDDING_DIM = 128
 LSTM_UNITS = 128
-BATCH_SIZE = 128
+BATCH_SIZE = 256
 EPOCHS = 15
 RANDOM_STATE = 42
 
