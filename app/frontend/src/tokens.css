@@ -1,0 +1,84 @@
+/* =============================================================
+   SevaSetu design tokens.
+
+   Direction: an official register/ledger, not a SaaS dashboard.
+   No gradients, no glassmorphism, no rounded-everything, no
+   purple-to-blue hero. Paper background, ink text, a single
+   institutional seal-green for primary actions, warm amber for
+   pending states, and brick red (not alarm red) for urgency —
+   closer to a passport/gazette palette than a tech product.
+   ============================================================= */
+
+:root {
+  /* --- Color --- */
+  --paper: #F7F5F0;
+  --paper-raised: #FFFFFF;
+  --ink: #1A2332;
+  --ink-soft: #4A5568;
+  --ink-faint: #8A93A3;
+  --hairline: #D8D3C7;
+  --hairline-strong: #B8B2A2;
+
+  --seal: #0B5D3B;
+  --seal-dark: #063D26;
+  --seal-tint: #E3EEE8;
+
+  --amber: #9C6B0E;
+  --amber-tint: #FBF1DD;
+
+  --brick: #A13A2F;
+  --brick-tint: #F7E7E4;
+
+  --slate: #45566E;
+  --slate-tint: #E8ECF1;
+
+  /* --- Type --- */
+  --font-display: "Source Serif 4", Georgia, serif;
+  --font-body: "IBM Plex Sans", "Noto Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* --- Shape --- */
+  --radius-sm: 3px;
+  --radius-md: 4px;
+
+  /* --- Shadow (used sparingly, flat elevation only) --- */
+  --shadow-card: 0 1px 2px rgba(26, 35, 50, 0.06), 0 1px 1px rgba(26, 35, 50, 0.04);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a { color: inherit; }
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Visible keyboard focus everywhere — quality floor, not decoration */
+:focus-visible {
+  outline: 2px solid var(--seal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
